@@ -1,0 +1,39 @@
+NATIONAL CYBER CRIME REPORTING PORTAL (PROTOTYPE)
+COMPLAINT REGISTRATION GUIDE
+=====================================================
+
+DEMONSTRATION DOCUMENT — This prototype is not an official
+Government of India service. For real complaints use
+cybercrime.gov.in or call 1930.
+
+STEP 1 — CHOOSE A CATEGORY
+  Select the crime type that best fits what happened. If you are
+  unsure, choose "Other Cyber Crime" and describe it — an officer
+  will re-classify the complaint.
+
+STEP 2 — YOUR DETAILS
+  Provide your full name, a working mobile number, email address
+  and your state/district. Your name is never shown publicly.
+
+STEP 3 — INCIDENT DETAILS
+  - Date and approximate time of the incident.
+  - Amount lost (approximate is fine).
+  - A clear description: how you were contacted, what was sent,
+    what you did, and what the loss was.
+  - Any suspect identifiers: phone numbers, UPI IDs, bank
+    accounts, URLs or social handles.
+
+STEP 4 — EVIDENCE AND SUBMISSION
+  Attach up to five files (max 5 MB each): screenshots, bank
+  statements, PDFs, or a short video. Accept the declaration,
+  answer the security question and submit.
+
+AFTER SUBMISSION
+  - You receive an NCRP complaint number instantly.
+  - Track status any time with the complaint number and the
+    registered mobile number.
+  - For money already transferred, call 1930 first — the first
+    hour matters most.
+
+-------------------------------------------------------------
+Prototype only · All sample records are fictitious.

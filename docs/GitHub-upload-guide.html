@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NCRP Portal — GitHub pe upload karne ka aasaan tareeka</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    overflow-x: hidden;
+    font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", "Noto Sans Devanagari", Arial, sans-serif;
+    background: #eef2f7; color: #16233a; line-height: 1.65;
+    padding: 24px 16px 80px;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  header.top {
+    background: linear-gradient(135deg, #0a2542, #14487c 60%, #1c5b96);
+    border-radius: 16px; padding: 34px 30px; color: #fff; margin-bottom: 22px;
+    box-shadow: 0 18px 40px -18px rgba(9,28,52,.5);
+  }
+  header.top .flag { display:flex; height:5px; width:72px; border-radius:3px; overflow:hidden; margin-bottom:18px; }
+  header.top .flag span { flex:1; }
+  header.top .flag .s { background:#ff9933; }
+  header.top .flag .w { background:#fff; }
+  header.top .flag .g { background:#138808; }
+  header.top h1 { font-size: 1.65rem; line-height: 1.25; margin-bottom: 8px; }
+  header.top p { color: #c2d6e8; font-size: .95rem; }
+  header.top .time { display:inline-block; margin-top:14px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); padding:6px 12px; border-radius:999px; font-size:.8rem; }
+
+  .card {
+    background: #fff; border: 1px solid #dde4ec; border-radius: 14px;
+    padding: 24px 26px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(15,35,60,.05);
+  }
+  .stepno {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 34px; height: 34px; border-radius: 10px;
+    background: #0d3866; color: #fff; font-weight: 800; font-size: 1rem;
+    margin-right: 12px; flex: none; vertical-align: middle;
+  }
+  .card h2 { font-size: 1.12rem; display: flex; align-items: center; gap: 0; margin-bottom: 14px; }
+  .card h2 .txt { line-height: 1.25; }
+  .card p { margin-bottom: 12px; font-size: .95rem; color: #35455e; }
+  .card p:last-child { margin-bottom: 0; }
+  .card ul, .card ol { margin: 0 0 12px 22px; font-size: .95rem; color: #35455e; }
+  .card li { margin-bottom: 7px; }
+  b, strong { color: #16233a; }
+
+  .click {
+    display: inline-block; background: #0d3866; color: #fff;
+    padding: 2px 9px; border-radius: 5px; font-size: .88em; font-weight: 700;
+    white-space: nowrap;
+  }
+  .click.green { background: #15803d; }
+  .click.orange { background: #c2410c; }
+  .click.grey { background: #475569; }
+  .click.purple { background: #6d28d9; }
+
+  .type {
+    display: inline-block; background: #fff7e8; color: #92400e;
+    border: 1px dashed #d9a44a; padding: 2px 8px; border-radius: 5px;
+    font-family: ui-monospace, "SF Mono", Consolas, monospace; font-size: .87em; font-weight: 600;
+  }
+
+  .tip {
+    background: #eaf7ee; border-left: 4px solid #15803d;
+    border-radius: 0 8px 8px 0; padding: 13px 16px; margin: 14px 0;
+    font-size: .9rem; color: #14532d;
+  }
+  .warn {
+    background: #fff7e8; border-left: 4px solid #d97706;
+    border-radius: 0 8px 8px 0; padding: 13px 16px; margin: 14px 0;
+    font-size: .9rem; color: #78350f;
+  }
+  .danger {
+    background: #fdeeee; border-left: 4px solid #b91c1c;
+    border-radius: 0 8px 8px 0; padding: 13px 16px; margin: 14px 0;
+    font-size: .9rem; color: #7f1d1d;
+  }
+  .tip b, .warn b, .danger b { color: inherit; }
+
+  .mock {
+    background: #f7f9fc; border: 1px solid #dde4ec; border-radius: 10px;
+    padding: 14px; margin: 14px 0; font-size: .86rem;
+  }
+  .mock .bar { display: flex; gap: 6px; margin-bottom: 10px; }
+  .mock .dot { width: 9px; height: 9px; border-radius: 50%; background: #cbd5e1; }
+  .mock .line {
+    height: 11px; background: #e2e8f0; border-radius: 4px; margin-bottom: 8px;
+  }
+  .mock .line.short { width: 55%; }
+  .mock .line.mid { width: 78%; }
+  .mock .field {
+    background: #fff; border: 1px solid #cbd5e1; border-radius: 6px;
+    padding: 8px 11px; font-size: .84rem; color: #475569; margin-bottom: 8px;
+    font-family: ui-monospace, monospace;
+  }
+  .mock .btnrow { display: flex; gap: 8px; margin-top: 10px; }
+  .mock .btn {
+    padding: 7px 16px; border-radius: 6px; font-size: .82rem; font-weight: 700;
+    background: #e2e8f0; color: #475569;
+  }
+  .mock .btn.primary { background: #238636; color: #fff; }
+
+  .big-num {
+    font-size: 2.6rem; font-weight: 800; color: #0d3866; line-height: 1;
+  }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+  @media (max-width: 640px) {
+    .grid2 { grid-template-columns: 1fr; }
+    body { padding: 14px 10px 60px; }
+    header.top { padding: 24px 20px; }
+    header.top h1 { font-size: 1.35rem; }
+    .card { padding: 18px 16px; }
+    .card h2 { font-size: 1.02rem; }
+    .card ul, .card ol { margin-left: 18px; }
+    table.tbl { font-size: .84rem; }
+    table.tbl th, table.tbl td { padding: 8px 8px; }
+    .type { font-size: .8em; word-break: break-all; }
+    .click { white-space: normal; }
+    .mock .field { word-break: break-all; }
+    .done { padding: 20px 18px; }
+    .done .url { font-size: .78rem; }
+    .stepno { width: 28px; height: 28px; font-size: .9rem; margin-right: 9px; }
+  }
+  table.tbl code, table.tbl .type { word-break: break-word; }
+  .box {
+    background: #f7f9fc; border: 1px solid #dde4ec; border-radius: 9px; padding: 13px 15px;
+  }
+  .box .lbl { font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: #8494a8; font-weight: 800; margin-bottom: 4px; }
+  .box .val { font-size: .92rem; font-weight: 700; color: #16233a; }
+  .box .val.small { font-weight: 500; font-size: .85rem; color: #475569; }
+
+  table.tbl { width: 100%; border-collapse: collapse; font-size: .9rem; margin: 12px 0; }
+  table.tbl th {
+    text-align: left; background: #f1f5f9; padding: 9px 12px;
+    font-size: .74rem; text-transform: uppercase; letter-spacing: .06em;
+    color: #64748b; border-bottom: 1px solid #dde4ec;
+  }
+  table.tbl td { padding: 10px 12px; border-bottom: 1px solid #eef2f7; vertical-align: top; }
+  table.tbl tr:last-child td { border-bottom: 0; }
+
+  .divider { text-align: center; margin: 26px 0; color: #8494a8; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 800; }
+  .divider::before, .divider::after { content: ""; display: inline-block; width: 60px; height: 1px; background: #cbd5e1; vertical-align: middle; margin: 0 12px; }
+
+  .done {
+    background: linear-gradient(135deg, #0f6b06, #15803d);
+    border-radius: 14px; padding: 26px; color: #fff; margin-bottom: 16px;
+  }
+  .done h2 { font-size: 1.25rem; margin-bottom: 8px; }
+  .done p { color: #d7eedd; font-size: .95rem; }
+  .done .url {
+    background: rgba(0,0,0,.22); border-radius: 8px; padding: 11px 15px;
+    margin-top: 14px; font-family: ui-monospace, monospace; font-size: .92rem;
+    word-break: break-all;
+  }
+
+  .checklist { list-style: none; margin-left: 0 !important; }
+  .checklist li {
+    padding-left: 28px; position: relative; margin-bottom: 11px !important;
+  }
+  .checklist li::before {
+    content: ""; position: absolute; left: 2px; top: .42em;
+    width: 13px; height: 7px; border-left: 2.5px solid #15803d; border-bottom: 2.5px solid #15803d;
+    transform: rotate(-45deg);
+  }
+
+  footer.end {
+    text-align: center; color: #8494a8; font-size: .82rem;
+    margin-top: 30px; padding-top: 20px; border-top: 1px solid #d8e0ea;
+  }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .card, header.top, .done { box-shadow: none; break-inside: avoid; }
+    header.top { background: #0a2542 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="flag"><span class="s"></span><span class="w"></span><span class="g"></span></div>
+    <h1>GitHub pe upload karne ka<br>sabse aasaan tareeka</h1>
+    <p>Koi command nahi. Koi Git install nahi. Sirf mouse se click karke — 5 minute ka kaam.</p>
+    <span class="time">5 minutes · Bilkul beginner ke liye</span>
+  </header>
+
+  <div class="card">
+    <h2><span class="stepno">1</span><span class="txt">ZIP file download karo</span></h2>
+    <p>Jo file maine di hai — <span class="type">NCRP-Portal-GitHub-Upload.zip</span> — usko apne computer me download karo (Downloads folder me chali jayegi).</p>
+    <p>Us file pe <b>right click</b> karo aur <b>Extract All</b> / <b>Extract Here</b> pe click karo.</p>
+    <div class="warn">
+      <b><b style="color:#c2410c">ZAROORI:</b> Ye step sabse zaroori hai.</b> ZIP ko extract kiye bina upload <b>nahi</b> hoga. Extract karne ke baad ek folder banega jiska naam <span class="type">cybercrime-portal</span> hoga. Uske andar ye cheezein dikhengi:
+      <div class="grid2" style="margin-top:10px">
+        <div class="box"><div class="lbl">Folder</div><div class="val small">src &nbsp;·&nbsp; public &nbsp;·&nbsp; docs</div></div>
+        <div class="box"><div class="lbl">Files</div><div class="val small">package.json · README.md · render.yaml</div></div>
+      </div>
+      Agar aisi cheezein dikh rahi hain — to sab sahi hai.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="stepno">2</span><span class="txt">GitHub account banao</span></h2>
+    <p>Browser me <b>github.com</b> kholo. Account nahi hai to <span class="click green">Sign up</span> pe click karo.</p>
+    <ul>
+      <li>Email daalo</li>
+      <li>Password banao (kam se kam 8 characters)</li>
+      <li>Username socho — jaise <span class="type">aritra123</span></li>
+      <li>Email me aaya verification code daalo</li>
+    </ul>
+    <div class="tip">
+      Tip: Account pehle se hai to <span class="click green">Sign in</span> karke seedha Step 3 pe jao.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="stepno">3</span><span class="txt">Naya repository banao</span></h2>
+    <p>Login karne ke baad, screen ke <b>top-right corner</b> me ek chhota <b>+</b> ka nishaan hai. Uspe click karo.</p>
+    <div class="mock">
+      <div class="bar" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+      <div style="font-size:.8rem;color:#64748b;margin-bottom:8px">github.com (top-right corner)</div>
+      <div class="field">+ &nbsp;&rarr;&nbsp; New repository</div>
+      <div class="line short"></div>
+    </div>
+    <p>Menu me <span class="click grey">New repository</span> pe click karo. Ab ek form khulega — <b>bilkul aise bharo</b>:</p>
+    <table class="tbl">
+      <tr><th>Kya likha hai form me</th><th>Aapko kya karna hai</th></tr>
+      <tr><td><b>Repository name</b></td><td>Type karo: <span class="type">cybercrime-portal</span></td></tr>
+      <tr><td><b>Description</b> (optional)</td><td>Chhod do khaali, ya likho: <i>Cyber crime reporting portal prototype</i></td></tr>
+      <tr><td><b>Public / Private</b></td><td><b>Public</b> select karo</td></tr>
+      <tr><td><b>Add a README file</b></td><td>NO &mdash; Tick <b>mat</b> karo</td></tr>
+      <tr><td><b>Add .gitignore</b></td><td>NO &mdash; Tick <b>mat</b> karo</td></tr>
+      <tr><td><b>Choose a license</b></td><td>NO &mdash; Tick <b>mat</b> karo</td></tr>
+    </table>
+    <div class="danger">
+      <b>Sabse badi galti:</b> "Add a README file" ya ".gitignore" me tick kar dena. Agar tick kiya to upload ke waqt conflict aayega. <b>Teeno box khaali chhodo.</b>
+    </div>
+    <p>Sab bharne ke baad neeche <span class="click green">Create repository</span> pe click karo. </p>
+  </div>
+
+  <div class="divider">ab upload karenge</div>
+
+  <div class="card">
+    <h2><span class="stepno">4</span><span class="txt">Files upload karo (asli kaam)</span></h2>
+    <p>Repository banne ke baad aapko ek <b>khaali page</b> dikhega jisme likha hoga <i>"Quick setup"</i>. Us page pe ye link dhoondo:</p>
+    <p style="text-align:center;margin:16px 0">
+      <span class="click" style="font-size:.95rem;padding:8px 18px">uploading an existing file</span>
+    </p>
+    <p>Ye link <b>neeli (blue)</b> rang me hoga, page ke beech me. Uspe click karo.</p>
+
+    <div class="tip">
+      <b>Link nahi mil raha?</b> Doosra tareeka: page ke top pe <b>Add file</b> button hai → uspe click karo → <b>Upload files</b> select karo.
+    </div>
+
+    <p>Ab ek badi box khulegi jisme likha hoga <i>"Drag files here to add them to your repository"</i>. Ab ye karo:</p>
+    <ol>
+      <li>Apna <b>cybercrime-portal</b> folder kholo (jo Step 1 me extract kiya tha)</li>
+      <li><b>Ctrl + A</b> dabao (Windows) ya <b>Cmd + A</b> (Mac) — sab kuch select ho jayega</li>
+      <li>Sab kuch <b>drag karke</b> browser ke us box me chhod do</li>
+    </ol>
+
+    <div class="mock">
+      <div class="bar" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+      <div style="font-size:.8rem;color:#64748b;margin-bottom:8px">Drag files here to add them to your repository</div>
+      <div style="border:2px dashed #94a3b8;border-radius:8px;padding:22px;text-align:center;color:#64748b;font-size:.85rem;background:#fff">
+        ↑ &nbsp; Yahan files chhodo<br>
+        <span style="font-size:.78rem">(55 files upload hongi)</span>
+      </div>
+    </div>
+
+    <div class="warn">
+      <b style="color:#c2410c">ZAROORI:</b> Agar folder drag nahi ho raha: pehle <b>cybercrime-portal</b> folder ke <b>andar</b> jao, phir Ctrl+A karo, phir drag karo. Folder ke andar ki cheezein drag karni hain, folder khud nahi.
+    </div>
+
+    <p>Files upload hone me <b>1-2 minute</b> lagenge (10 MB hai). Progress bar dikhega. Wait karo.</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="stepno">5</span><span class="txt">Commit karo (yaani save karo)</span></h2>
+    <p>Files upload hone ke baad, page thoda <b>neeche scroll</b> karo. Wahan ye dikhega:</p>
+    <div class="mock">
+      <div style="font-size:.82rem;color:#16233a;margin-bottom:6px"><b>Commit changes</b></div>
+      <div class="field">Add files via upload</div>
+      <div style="font-size:.78rem;color:#64748b;margin-bottom:10px">○ Commit directly to the <b>main</b> branch</div>
+      <div class="btnrow">
+        <span class="btn primary">Commit changes</span>
+      </div>
+    </div>
+    <p>Kuch likhna zaroori nahi — jo likha hai theek hai. Bas <span class="click green">Commit changes</span> pe click karo.</p>
+    <p>Bas! Aapki files GitHub pe chali gayin.</p>
+  </div>
+
+  <div class="done">
+    <h2>GitHub ka kaam ho gaya!</h2>
+    <p>Ab browser me apni repository kholiye — saari files dikhni chahiye. Aapka link hoga aisa:</p>
+    <div class="url">https://github.com/<b>aapka-username</b>/cybercrime-portal</div>
+    <p style="margin-top:14px">Jab aisa page dikhe jisme files ki list ho aur <b>README.md</b> ka content neeche dikh raha ho — to sab sahi hai. Ab Render pe jayenge.</p>
+  </div>
+
+  <div class="divider">ab live karenge</div>
+
+  <div class="card">
+    <h2><span class="stepno">6</span><span class="txt">Render account banao</span></h2>
+    <p>Naye tab me <b>render.com</b> kholo.</p>
+    <ol>
+      <li><span class="click purple">Get Started</span> pe click karo</li>
+      <li><b>GitHub</b> wala button select karo (Google/email nahi — GitHub hi, kyunki code wahan hai)</li>
+      <li>GitHub permission maangega → <span class="click grey">Authorize Render</span> pe click karo</li>
+    </ol>
+    <div class="tip">
+      Achhi khabar: Render me credit card <b>nahi</b> chahiye free plan ke liye. Bilkul free hai.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="stepno">7</span><span class="txt">Web Service banao</span></h2>
+    <p>Render dashboard pe pahunchne ke baad, top-right me <span class="click">+ New</span> pe click karo → <b>Web Service</b> select karo.</p>
+    <p>Ab "Build and deploy from a Git repository" wala option select karo → <span class="click grey">Next</span>.</p>
+    <p>List me apni repo <b>cybercrime-portal</b> dikhegi. Uske aage <span class="click">Connect</span> pe click karo.</p>
+    <div class="warn">
+      <b style="color:#c2410c">ZAROORI:</b> Repo nahi dikh rahi? "Configure account" ya "GitHub" link pe click karke repo ka access allow karo. Ya "Public Git repository" tab me apna GitHub URL paste kar do.
+    </div>
+
+    <p>Ab ek form khulega. <b>Sirf ye 5 cheezein bharo, baaki chhod do:</b></p>
+    <table class="tbl">
+      <tr><th>Field</th><th>Kya daalna hai</th></tr>
+      <tr><td><b>Name</b></td><td><span class="type">ncrp-prototype</span></td></tr>
+      <tr><td><b>Region</b></td><td><b>Singapore</b> (India se sabse paas)</td></tr>
+      <tr><td><b>Branch</b></td><td><span class="type">main</span> (apne aap aa jayega)</td></tr>
+      <tr><td><b>Build Command</b></td><td><span class="type">npm install</span></td></tr>
+      <tr><td><b>Start Command</b></td><td><span class="type">npm start</span></td></tr>
+    </table>
+    <p>Neeche <b>Instance Type</b> me <b>Free</b> select karo.</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="stepno">8</span><span class="txt">4 Environment Variables daalo</span></h2>
+    <p>Usi form me thoda neeche scroll karo. <b>Environment Variables</b> naam ka section milega. <span class="click grey">+ Add Environment Variable</span> pe click karke ye <b>chaar</b> cheezein add karo:</p>
+    <table class="tbl">
+      <tr><th>Key (left box)</th><th>Value (right box)</th></tr>
+      <tr><td><span class="type">NODE_VERSION</span></td><td><span class="type">20.20.2</span></td></tr>
+      <tr><td><span class="type">SESSION_SECRET</span></td><td><span class="type">ncrp2026secretkeychange1234567890abcdef</span></td></tr>
+      <tr><td><span class="type">ADMIN_PASSWORD</span></td><td>Apna password — jaise <span class="type">Cyber@Secure2026</span></td></tr>
+      <tr><td><span class="type">COOKIE_SECURE</span></td><td><span class="type">true</span></td></tr>
+    </table>
+    <div class="warn">
+      <b style="color:#c2410c">ZAROORI:</b> ADMIN_PASSWORD yaad rakhna! Ye aapka admin login password hai. Render pe <b>Admin@1930</b> kaam nahi karega — jo yahan daaloge wahi chalega.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="stepno">9</span><span class="txt">Deploy karo aur wait karo</span></h2>
+    <p>Sabse neeche <span class="click green">Create Web Service</span> pe click karo.</p>
+    <p>Ab log dikhna shuru hoga. <b>2 se 4 minute</b> lagenge. Ye lines dikhengi:</p>
+    <div class="mock" style="font-family:ui-monospace,monospace;font-size:.78rem;color:#475569">
+      <div>Cloning from https://github.com/...</div>
+      <div>Installing dependencies...</div>
+      <div>added 62 packages</div>
+      <div style="color:#15803d;font-weight:700">NCRP prototype listening on http://0.0.0.0:10000</div>
+      <div style="color:#15803d;font-weight:700">==&gt; Your service is live</div>
+    </div>
+    <p>Jab upar <b>LIVE</b> (hara) badge dikhe, to kaam ho gaya. Upar jo URL hai — wahi aapki website ka address hai.</p>
+  </div>
+
+  <div class="done">
+    <h2>Aapki website live hai!</h2>
+    <p>Upar wala link kholo. Website chalegi. Admin console ke liye:</p>
+    <div class="url">https://ncrp-prototype.onrender.com/admin/login</div>
+    <p style="margin-top:12px">Username: <b>admin</b> &nbsp;·&nbsp; Password: <b>jo aapne Step 8 me daala tha</b></p>
+  </div>
+
+  <div class="card">
+    <h2><span class="stepno" style="background:#15803d">OK</span><span class="txt">Deploy ke baad 3 chhote kaam</span></h2>
+    <ul class="checklist">
+      <li><b>Link kisi ko bhejo</b> — WhatsApp pe bhej ke mobile me check karo. 15 minute idle ke baad pehli baar khulne me 30-60 sec lag sakta hai. Ye normal hai (free plan).</li>
+      <li><b>README me link daalo</b> — GitHub repo kholo → README.md pe click → pencil (edit) icon → sabse upar apna Render link add karo → Commit.</li>
+      <li><b>Demo disclaimer mat hatao</b> — footer me "DEMONSTRATION PROTOTYPE" likha hai. Ye zaroori hai — project sarkari nahi hai.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2><span class="stepno" style="background:#475569">?</span><span class="txt">Agar kuch galat ho jaye</span></h2>
+    <table class="tbl">
+      <tr><th>Kya dikh raha hai</th><th>Kya karna hai</th></tr>
+      <tr><td>Files upload nahi ho rahe / folder drag nahi hota</td><td>Folder ke <b>andar</b> jao, Ctrl+A dabao, phir drag karo. Folder khud drag mat karo.</td></tr>
+      <tr><td>GitHub pe "uploading an existing file" link nahi mil raha</td><td>Top pe <b>Add file</b> → <b>Upload files</b> use karo</td></tr>
+      <tr><td>Render pe build fail ho gaya</td><td>Build Command check karo — <span class="type">npm install</span> hona chahiye (npm ci nahi)</td></tr>
+      <tr><td>Render pe "package.json not found"</td><td>Render → Settings → <b>Root Directory</b> khaali hona chahiye</td></tr>
+      <tr><td>Website khulti hai par "Application failed to respond"</td><td>Start Command check karo — <span class="type">npm start</span> hona chahiye. <b>PORT</b> env var mat daalo.</td></tr>
+      <tr><td>Admin login nahi chal raha</td><td>Password wahi daalo jo Step 8 me ADMIN_PASSWORD me likha tha. Bhool gaye? Render → Environment → naya password → Save → Manual Deploy.</td></tr>
+      <tr><td>Site bahut slow khulti hai (50 sec)</td><td>Free plan ka sleep mode hai. Normal. Starter plan me nahi hoga.</td></tr>
+      <tr><td>Meri complaints gayab ho gayi</td><td>Free plan me restart pe data reset hota hai. Normal — site wapas sample data se chal padegi.</td></tr>
+    </table>
+  </div>
+
+  <div class="card" style="background:#f7f9fc;border-style:dashed">
+    <h2 style="font-size:1rem"><span class="stepno" style="background:#64748b;font-size:.9rem">i</span><span class="txt">Yaad rakhne wali 2 baatein</span></h2>
+    <p><b>1. Free plan me data save nahi rehta.</b> Render restart karega to complaints mit jayengi aur sample data wapas aa jayega. Demo ke liye bilkul theek hai. Data bachana ho to Render me Starter plan lena padega ($7/month) aur disk add karna padega.</p>
+    <p><b>2. Free site 15 min baad so jati hai.</b> Koi na khule to sleep, phir pehli baar khulne me 30-60 sec. Ise "cold start" kehte hain. Normal hai.</p>
+  </div>
+
+  <footer class="end">
+    NCRP Portal prototype · Sab sample records fictitious hain<br>
+    Ye project Government of India se affiliated nahi hai
+  </footer>
+
+</div>
+</body>
+</html>

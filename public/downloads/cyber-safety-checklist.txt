@@ -1,0 +1,36 @@
+NATIONAL CYBER CRIME REPORTING PORTAL (PROTOTYPE)
+CYBER SAFETY CHECKLIST
+=====================================================
+
+ACCOUNTS
+  [ ] Unique password for every important account
+  [ ] Two-factor authentication enabled (app-based where possible)
+  [ ] Review active sessions monthly and sign out unknown devices
+  [ ] Never reuse your email password on other sites
+
+PAYMENTS
+  [ ] Never scan a QR code to RECEIVE money
+  [ ] Verify payee name before approving any UPI collect request
+  [ ] Keep card limits and international usage toggled off by default
+  [ ] Turn on transaction alerts for every debit
+
+DEVICES
+  [ ] Screen lock with PIN/biometric on phone and laptop
+  [ ] Install apps only from official app stores
+  [ ] Update OS and apps automatically
+  [ ] Never install remote-access apps on a caller's request
+
+COMMUNICATION
+  [ ] Treat urgency as a red flag
+  [ ] Verify lookalike domains before clicking
+  [ ] No bank, wallet or official will ask for OTP / PIN / CVV
+  [ ] When unsure, call the number on the back of your card
+
+IF FRAUD HAPPENS
+  1. Call 1930 immediately
+  2. Ask your bank to freeze the beneficiary account
+  3. File a complaint on the portal with evidence
+  4. Track the complaint and respond to officer queries
+
+-------------------------------------------------------------
+Prototype only · All sample records are fictitious.

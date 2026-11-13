@@ -1,0 +1,33 @@
+NATIONAL CYBER CRIME REPORTING PORTAL (PROTOTYPE)
+EVIDENCE CHECKLIST
+=====================================================
+
+Always collect:
+  [ ] Screenshots of chats, emails, SMS alerts and call logs
+  [ ] Screenshot of the fraudulent payment / checkout page
+  [ ] Bank statement pages showing the debits (with UTR numbers)
+  [ ] UPI ID, account number or wallet ID of the beneficiary
+  [ ] Phone numbers, email headers, website URLs and handles used
+  [ ] A short timeline (date + time + what happened)
+
+Category-specific additions
+  UPI / payment fraud ....... transaction IDs, QR code image,
+                               app payment history export
+  OTP / banking fraud ....... SMS alerts, SIM replacement SMS,
+                               bank complaint reference number
+  Social media .............. profile URLs, post/comment links,
+                               screenshots showing timestamps
+  Sextortion / harassment ... do NOT pay; preserve chats, note
+                               the first contact time, report fast
+  Job / investment fraud .... group links, deposit screenshots,
+                               fake app name and version
+  Ransomware / hacking ...... ransom note, file extensions,
+                               system logs, backup status
+
+Tips
+  - File names should be clear (e.g. upi-debit-12nov.png).
+  - Do not edit or crop screenshots — full screens help officers.
+  - Do not include your passwords or OTPs in any file.
+
+-------------------------------------------------------------
+Prototype only · All sample records are fictitious.

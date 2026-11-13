@@ -1,0 +1,57 @@
+# ------------------------------------------------------------------
+# Render Blueprint — NCRP prototype
+#
+# FREE PLAN version (default): no disk attached, so complaints/uploads
+# reset whenever the service restarts or redeploys. The site itself
+# always works — it just re-seeds itself with the sample data.
+#
+# Want data to survive restarts? Switch to the Starter plan and follow
+# the "PERSISTENT DISK" block at the bottom of this file.
+# ------------------------------------------------------------------
+services:
+  - type: web
+    name: ncrp-prototype
+    runtime: node
+    plan: free                       # free | starter | standard
+    region: singapore                # oregon | ohio | virginia | frankfurt | singapore
+    branch: main
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
+    autoDeploy: true                 # every git push to main redeploys
+
+    envVars:
+      - key: NODE_VERSION
+        value: 20.20.2
+
+      # Render generates a long random value automatically.
+      - key: SESSION_SECRET
+        generateValue: true
+
+      # You will be asked to type this once in the Render dashboard when
+      # the Blueprint is applied. Use your own strong password.
+      - key: ADMIN_PASSWORD
+        sync: false
+
+      # Served over HTTPS on Render, so mark the session cookie Secure.
+      - key: COOKIE_SECURE
+        value: "true"
+
+# ------------------------------------------------------------------
+# PERSISTENT DISK (Starter plan only — free plan does not support disks)
+#
+# 1. Change  plan: free  →  plan: starter   above
+# 2. Uncomment the two env var pairs and the disk block below
+# 3. Commit and push — Render will apply the change
+#
+#   envVars (add under the existing envVars list):
+#     - key: DATA_DIR
+#       value: /var/data
+#     - key: UPLOAD_DIR
+#       value: /var/data/uploads
+#
+#   disk:
+#     name: ncrp-data
+#     mountPath: /var/data
+#     sizeGB: 1
+# ------------------------------------------------------------------

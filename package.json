@@ -1,0 +1,27 @@
+{
+  "name": "national-cyber-crime-portal",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Prototype of the National Cyber Crime Reporting Portal \u2014 complaint registration, evidence upload, tracking and an admin grievance console.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "seed": "node src/seed-cli.js"
+  },
+  "engines": {
+    "node": ">=18.17.0"
+  },
+  "keywords": [
+    "cybercrime",
+    "portal",
+    "prototype",
+    "express"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.22.3",
+    "multer": "^2.0.2"
+  }
+}
